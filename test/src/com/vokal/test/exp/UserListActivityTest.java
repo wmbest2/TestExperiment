@@ -2,6 +2,9 @@ package com.vokal.test.exp;
 
 import android.test.ActivityInstrumentationTestCase2;
 
+import android.app.Activity;
+import android.widget.TextView;
+
 import com.vokal.test.exp.network.*;
 
 /**
@@ -16,6 +19,8 @@ import com.vokal.test.exp.network.*;
  */
 public class UserListActivityTest extends ActivityInstrumentationTestCase2<UserListActivity> {
 
+    private TextView mResponse;
+
     public UserListActivityTest() {
         super("com.vokal.test.exp", UserListActivity.class);
     }
@@ -24,14 +29,17 @@ public class UserListActivityTest extends ActivityInstrumentationTestCase2<UserL
     public void setUp() throws Exception {
         super.setUp();
         NetworkClient.getInstance().setImpl(new TestNetworkImpl());       
-        getActivity();
+        Activity activity = getActivity();
+        mResponse = (TextView) activity.findViewById(R.id.response);
     }
 
     public void testSleep() {
         try {
-            Thread.sleep(10000);
+            Thread.sleep(1000);
         } catch (Exception e) {
         }
+        
+        assertTrue(mResponse.getText().equals("THIS IS TEST DATA HAHAH I WIN"));
     }
 
 }
